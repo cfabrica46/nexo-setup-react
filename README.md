@@ -1,16 +1,61 @@
-# React + Vite
+# NEXO Setup — React (AP3)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Migración académica de NEXO Angular a React con Tailwind CSS, React Router DOM, Fetch API y JSON Server.
 
-Currently, two official plugins are available:
+## Iniciar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+**Backend local alternativo** (otro terminal):
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npx json-server --watch db.json --port 3000
+```
 
-## Expanding the ESLint configuration
+Por defecto el frontend usa la API pública existente `https://nexo-setup.onrender.com`. Para usar el backend local, cree un archivo `.env.local` con `VITE_API_URL=http://localhost:3000` y reinicie Vite. Los datos iniciales del backend se encuentran en `db.json`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Rutas
+
+- `/` Inicio
+- `/nosotros` Información de NEXO
+- `/productos` Catálogo y filtros
+- `/productos/:id` Detalle de producto
+- `/ofertas` Descuentos
+- `/tienda` Colecciones
+- `/contacto` Formulario con validaciones
+- `/login` Login simulado
+- `/mi-cuenta` Datos de sesión
+- `/dashboard` Estadísticas y CRUD simulado
+- `/carrito` Carrito y compra simulada
+- `*` 404
+
+**Demo login:** `admin@nexosetup.pe` / `nexo123`
+
+## Restricciones de la simulación
+
+No existe autenticación real ni pasarela de pagos. Los cambios CRUD, la sesión y el carrito se conservan solamente en el LocalStorage del navegador. El servicio REST expone el catálogo original desde JSON Server.
+
+## Importante: imágenes
+
+Los 12 archivos JPG deben estar en `public/assets/products/` manteniendo los nombres referidos por `db.json`. Esta entrega de código no incluye las imágenes binarias.
+
+## AP3: evidencia
+
+- Componentes funcionales y props: `src/components/ProductCard.jsx`
+- React Router DOM: `src/App.jsx`
+- `useState`, `useEffect` y Fetch: `src/context/StoreContext.jsx` y `src/services/productService.js`
+- `map()` y renderizado condicional: `src/pages/Productos.jsx`
+- Formulario y eventos: `src/pages/Contacto.jsx`, `src/pages/Login.jsx`, `src/pages/Dashboard.jsx`
+- Tailwind CSS y responsive: `src/index.css`, componentes y páginas
+- API simulada: `db.json`
+
+## Publicación
+
+```bash
+npm run build
+```
+
+Publicar `dist/` en un servicio con rewrite SPA hacia `index.html` para rutas directas. Verificar acceso público a JSON Server y habilitación CORS. Completar aquí los enlaces reales del despliegue, GitHub e integrantes del grupo.

@@ -1,111 +1,96 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+/* React conserva la identidad PETROL STUDIO y sus dos temas de Angular. */
+:root, :root[data-theme='dark'] {
+  --color-bg: #0d171b;
+  --color-surface: #18262b;
+  --color-surface-secondary: #26383d;
+  --color-surface-alt: #112025;
+  --color-primary: #67b3ba;
+  --color-primary-hover: #85ced2;
+  --color-on-primary: #081214;
+  --color-text: #f3f5f2;
+  --color-muted: #acc0bc;
+  --color-border: #486064;
+  --color-success: #72cba6;
+  --color-danger: #ee9198;
+  --color-warning: #e7bd70;
+  --color-hero-bg: #b9d9d3;
+  --color-hero-text: #122d2e;
+  --color-feature-bg: #367c85;
+  --color-feature-text: #ffffff;
+  --color-yellow: #e7bd70;
+  --color-pink: #d58f9a;
+  color-scheme: dark;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root[data-theme='light'] {
+  --color-bg: #eef5f3;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #e2efec;
+  --color-surface-alt: #f6fbfa;
+  --color-primary: #478a92;
+  --color-primary-hover: #36747b;
+  --color-on-primary: #ffffff;
+  --color-text: #1c2a2d;
+  --color-muted: #596e72;
+  --color-border: #c4d7d3;
+  --color-success: #1f7b59;
+  --color-danger: #bf616c;
+  --color-warning: #9f7319;
+  --color-hero-bg: #d8ebe7;
+  --color-hero-text: #142c2f;
+  --color-feature-bg: #69b8c0;
+  --color-feature-text: #112728;
+  --color-yellow: #e0b764;
+  --color-pink: #d58f9a;
+  color-scheme: light;
 }
-
-body {
-  margin: 0;
+@theme inline {
+  --color-nexo-bg: var(--color-bg);
+  --color-nexo-surface: var(--color-surface);
+  --color-nexo-surface-alt: var(--color-surface-alt);
+  --color-nexo-primary: var(--color-primary);
+  --color-nexo-primary-hover: var(--color-primary-hover);
+  --color-nexo-on-primary: var(--color-on-primary);
+  --color-nexo-text: var(--color-text);
+  --color-nexo-muted: var(--color-muted);
+  --color-nexo-border: var(--color-border);
+  --color-nexo-success: var(--color-success);
+  --color-nexo-danger: var(--color-danger);
+  --color-nexo-warning: var(--color-warning);
+  --color-nexo-hero: var(--color-hero-bg);
+  --color-nexo-hero-text: var(--color-hero-text);
+  --color-nexo-feature: var(--color-feature-bg);
+  --color-nexo-feature-text: var(--color-feature-text);
+  --color-nexo-yellow: var(--color-yellow);
+  --color-nexo-pink: var(--color-pink);
 }
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+:root { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--color-bg); color: var(--color-text); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; }
+#root { min-height: 100vh; }
+button { cursor: pointer; }
+button:disabled { opacity: .55; cursor: not-allowed; }
+a, button, input, select, textarea { transition: border-color .2s ease, background-color .2s ease, color .2s ease; }
+::selection { background: var(--color-primary); color: var(--color-on-primary); }
+@layer components {
+  .section-wrap { @apply mx-auto max-w-7xl px-5 py-12 sm:py-16 lg:px-8; }
+  .section-heading { @apply mb-7 flex flex-wrap items-end justify-between gap-4; }
+  .section-heading h2 { @apply mt-2 text-3xl font-black leading-tight tracking-tight sm:text-4xl; }
+  .section-label { @apply text-xs font-black uppercase tracking-[.22em] text-nexo-primary; }
+  .spec-label { @apply text-xs font-bold uppercase tracking-[.12em] text-nexo-primary; }
+  .spec-tag { @apply inline-flex w-fit items-center rounded-full border border-nexo-border px-3 py-1.5 text-xs font-bold tracking-wide text-nexo-primary; }
+  .page-title { @apply mt-3 text-4xl font-black leading-tight tracking-tight sm:text-5xl; }
+  .page-subtitle { @apply mt-4 max-w-2xl text-base leading-7 text-nexo-muted; }
+  .nexo-card { @apply rounded-2xl border border-nexo-border bg-nexo-surface shadow-[0_8px_24px_rgba(0,0,0,.045)] transition-colors hover:border-nexo-primary/70; }
+  .btn-primary { @apply inline-flex items-center justify-center rounded-xl bg-nexo-primary px-5 py-3 text-sm font-extrabold text-nexo-on-primary transition-all hover:bg-nexo-primary-hover; }
+  .btn-outline { @apply inline-flex items-center justify-center rounded-xl border border-nexo-border px-5 py-3 text-sm font-bold text-nexo-text hover:border-nexo-primary hover:text-nexo-primary; }
+  .link-accent { @apply text-sm font-bold text-nexo-primary hover:underline; }
+  .input-nexo { @apply block w-full rounded-xl border border-nexo-border bg-nexo-bg px-4 py-3 text-sm text-nexo-text outline-none placeholder:text-nexo-muted/70 focus:border-nexo-primary; }
+  .form-label { @apply mb-2 block text-sm font-semibold; }
+  .nav-icon { @apply inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-nexo-border px-2 text-lg text-nexo-text hover:border-nexo-primary; }
+  .dropdown-item { @apply block rounded-lg px-4 py-3 text-sm font-semibold text-nexo-text hover:bg-nexo-surface-alt; }
+  .modal-backdrop { @apply fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/70 p-4; }
+  .modal-panel { @apply my-auto w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-nexo-border bg-nexo-surface p-6 shadow-2xl sm:p-8; }
 }
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration: .01ms!important; transition-duration: .01ms!important; } }

@@ -1,0 +1,8 @@
+import { Link, useNavigate } from 'react-router-dom'
+import { useStore } from '../context/StoreContext'
+export default function MiCuenta() {
+  const { session, logout } = useStore()
+  const navigate = useNavigate()
+  if (!session) return <section className="section-wrap"><span className="section-label">MI CUENTA</span><h1 className="page-title">Inicia sesión para continuar.</h1><p className="page-subtitle">Accede con las credenciales de demostración de NEXO.</p><Link className="btn-primary mt-6 inline-block" to="/login">Iniciar sesión</Link></section>
+  return <section className="section-wrap"><span className="section-label">PERFIL</span><h1 className="page-title">Mi Cuenta</h1><div className="nexo-card mt-9 max-w-2xl p-8"><div className="mb-7 flex items-center gap-4"><div className="grid h-16 w-16 place-items-center rounded-2xl bg-nexo-primary text-2xl font-black text-nexo-on-primary">N</div><div><h2 className="text-2xl font-black">{session.nombre}</h2><p className="text-sm text-nexo-muted">Sesión activa</p></div></div><dl className="grid gap-5 sm:grid-cols-2">{[['Correo',session.email],['Rol',session.rol],['Fecha de ingreso',new Date(session.fechaIngreso).toLocaleDateString('es-PE')],['Estado','Autenticado']].map(([k,v]) => <div key={k} className="rounded-xl bg-nexo-surface-alt p-4"><dt className="text-xs font-bold uppercase tracking-wider text-nexo-muted">{k}</dt><dd className="mt-2 font-semibold">{v}</dd></div>)}</dl><div className="mt-7 flex flex-wrap gap-3"><Link to="/dashboard" className="btn-primary">Ir al Dashboard</Link><button className="btn-outline" onClick={() => { logout(); navigate('/') }}>Cerrar sesión</button></div></div></section>
+}
