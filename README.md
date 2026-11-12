@@ -1,61 +1,74 @@
-# NEXO Setup — React (AP3)
+# NEXO! — Cosplay Club
 
-Migración académica de NEXO Angular a React con Tailwind CSS, React Router DOM, Fetch API y JSON Server.
+Prototipo universitario para **PC3, Avance N.º 1** de JavaScript Avanzado (UTP).
 
-## Iniciar
+**Idea:** comunidad cosplay para aprender técnicas, buscar colaboradores, mostrar procesos y descubrir actividades. No es un e-commerce.
+
+## Tecnologías
+
+React 19 · Vite 7 · Tailwind CSS 4 · React Router DOM · Lucide React.
+
+## Ejecutar
 
 ```bash
 npm install
 npm run dev
 ```
 
-**Backend local alternativo** (otro terminal):
-
-```bash
-npx json-server --watch db.json --port 3000
-```
-
-Por defecto el frontend usa la API pública existente `https://nexo-setup.onrender.com`. Para usar el backend local, cree un archivo `.env.local` con `VITE_API_URL=http://localhost:3000` y reinicie Vite. Los datos iniciales del backend se encuentran en `db.json`.
-
-## Rutas
-
-- `/` Inicio
-- `/nosotros` Información de NEXO
-- `/productos` Catálogo y filtros
-- `/productos/:id` Detalle de producto
-- `/ofertas` Descuentos
-- `/tienda` Colecciones
-- `/contacto` Formulario con validaciones
-- `/login` Login simulado
-- `/mi-cuenta` Datos de sesión
-- `/dashboard` Estadísticas y CRUD simulado
-- `/carrito` Carrito y compra simulada
-- `*` 404
-
-**Demo login:** `admin@nexosetup.pe` / `nexo123`
-
-## Restricciones de la simulación
-
-No existe autenticación real ni pasarela de pagos. Los cambios CRUD, la sesión y el carrito se conservan solamente en el LocalStorage del navegador. El servicio REST expone el catálogo original desde JSON Server.
-
-## Importante: imágenes
-
-Los 12 archivos JPG deben estar en `public/assets/products/` manteniendo los nombres referidos por `db.json`. Esta entrega de código no incluye las imágenes binarias.
-
-## AP3: evidencia
-
-- Componentes funcionales y props: `src/components/ProductCard.jsx`
-- React Router DOM: `src/App.jsx`
-- `useState`, `useEffect` y Fetch: `src/context/StoreContext.jsx` y `src/services/productService.js`
-- `map()` y renderizado condicional: `src/pages/Productos.jsx`
-- Formulario y eventos: `src/pages/Contacto.jsx`, `src/pages/Login.jsx`, `src/pages/Dashboard.jsx`
-- Tailwind CSS y responsive: `src/index.css`, componentes y páginas
-- API simulada: `db.json`
-
-## Publicación
+Verificar el build:
 
 ```bash
 npm run build
 ```
 
-Publicar `dist/` en un servicio con rewrite SPA hacia `index.html` para rutas directas. Verificar acceso público a JSON Server y habilitación CORS. Completar aquí los enlaces reales del despliegue, GitHub e integrantes del grupo.
+## Páginas
+
+- `/` Inicio
+- `/comunidad` Creadores y buscador
+- `/comunidad/:id` Ficha de creador
+- `/colaboraciones` Tablón y publicación local
+- `/eventos` Agenda y guardados
+- `/proyectos` Procesos creativos
+- `/proyectos/:id` Detalle de proceso
+- `/recursos` Guías
+- `/nosotros` Propósito del proyecto
+- `/contacto` Formulario simulado
+- `*` 404
+
+## Imágenes por reemplazar
+
+Por ahora **todas son etiquetas `<img>` con marcadores visibles** en `public/assets/placeholders/`:
+
+- `hero.svg`: imagen principal.
+- `persona.svg`: perfiles de creadores.
+- `proyecto.svg`: procesos y proyectos.
+- `evento.svg`: agenda.
+
+Se utilizan mediante el componente `src/components/ImageSlot.jsx`. Para incorporar fotos más adelante, coloca tus imágenes autorizadas en `public/assets/images/` y cambia la propiedad `imagen` en `src/data/content.js` o el `src` del componente Hero.
+
+## Datos de demostración
+
+Los perfiles, eventos, proyectos y propuestas iniciales son ficticios. Las funciones de tarjeta, guardados y nuevas propuestas utilizan **LocalStorage únicamente**. No existe autenticación ni mensajería real.
+
+## Diseño
+
+Identidad editorial y vivaz basada en fanzines: crema `#FFF8ED`, tinta `#223348`, coral `#FF644D`, amarillo `#FFD34E` y menta `#70D9C4`. Titulares Bricolage Grotesque; cuerpo DM Sans. Implementado con Tailwind CSS y estilos base en `src/index.css`.
+
+## Entregables académicos
+
+- `docs/PC3_AVANCE_01.md`: respuestas a las cinco preguntas.
+- `docs/COMPROBACION_AP3.md`: checklist de requisitos y pruebas.
+- `docs/FIGMA_INSTRUCCIONES.md`: importación a Figma.
+- `design/figma/`: guía de estilos y wireframes desktop/mobile, en SVG.
+
+**Pendiente del equipo:** importar los SVG en Figma, compartir un enlace real y completar los nombres de integrantes.
+
+## Usarlo en una rama del repositorio actual
+
+Antes de sobrescribir archivos del proyecto anterior, crea una rama desde un árbol de Git limpio:
+
+```bash
+git switch -c feature/nexo-cosplay-vivo
+```
+
+Copia el contenido de este ZIP en la raíz de esa rama, eliminando los componentes antiguos que ya no sean usados. Luego instala, prueba y realiza un commit. No copies `node_modules` ni `dist`.

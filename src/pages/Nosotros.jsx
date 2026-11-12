@@ -1,28 +1,9 @@
 import { Link } from 'react-router-dom'
-
-export default function Nosotros() {
-  return (
-    <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-      <p className="text-xs font-bold uppercase tracking-widest text-nexo-primary">Sobre NEXO</p>
-      <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">Tu espacio debería sentirse tan único como tú.</h1>
-      <p className="mt-7 max-w-3xl text-base leading-8 text-nexo-muted">NEXO Setup es una tienda ficticia de accesorios tecnológicos pensada para quienes estudian, programan, trabajan desde casa o disfrutan de su escritorio. Nuestra propuesta reúne productos útiles con una estética moderna, sin complicaciones.</p>
-      <div className="mt-12 grid gap-5 md:grid-cols-3">
-        {[
-          ['Productividad', 'Herramientas que hacen más cómoda tu jornada.'],
-          ['Estilo', 'Accesorios que se integran visualmente a tu espacio.'],
-          ['Versatilidad', 'Opciones para estudiar, crear y jugar de forma casual.'],
-        ].map(([titulo, descripcion]) => (
-          <article key={titulo} className="rounded-2xl border border-nexo-border bg-nexo-surface p-7">
-            <div className="mb-5 h-1 w-12 rounded bg-nexo-primary" />
-            <h2 className="text-xl font-bold">{titulo}</h2>
-            <p className="mt-3 text-sm leading-7 text-nexo-muted">{descripcion}</p>
-          </article>
-        ))}
-      </div>
-      <div className="mt-12 rounded-2xl border border-nexo-border bg-nexo-surface p-8 sm:flex sm:items-center sm:justify-between sm:gap-5">
-        <div><h2 className="text-2xl font-bold">¿Listo para mejorar tu setup?</h2><p className="mt-2 text-nexo-muted">Descubre nuestra selección de accesorios.</p></div>
-        <Link to="/productos" className="mt-5 inline-block rounded-xl bg-nexo-primary px-6 py-3 text-sm font-semibold text-white hover:bg-nexo-primary-hover sm:mt-0">Explorar catálogo</Link>
-      </div>
-    </div>
-  )
+import { ArrowUpRight, Handshake, Lightbulb, Users, HeartHandshake } from 'lucide-react'
+import ImageSlot from '../components/ImageSlot.jsx'
+const values=[{icon:Lightbulb,title:'Aprender sin compararse',text:'El progreso de alguien no invalida tus primeros pasos. Preguntar también es crear.',bg:'bg-sun'},{icon:Handshake,title:'Colaborar con respeto',text:'Reconocer el trabajo de fotógrafos, cosplayers, makers y cada persona que participa.',bg:'bg-mint'},{icon:HeartHandshake,title:'Compartir con consentimiento',text:'Respetar límites, créditos y permisos, sobre todo al tomar y publicar fotografías.',bg:'bg-rose'}]
+export default function Nosotros({onJoin}){
+ return <><section className="section-space border-b-2 border-ink bg-sky/50"><div className="container-nexo grid items-center gap-9 lg:grid-cols-[1fr_.9fr]"><div><span className="kicker">Por qué existe NEXO</span><h1 className="font-display mt-5 text-5xl font-extrabold leading-[1.03] tracking-[-.06em] sm:text-6xl">No es un concurso de quién hace el mejor traje.</h1><p className="mt-6 max-w-xl text-base leading-8">NEXO es un prototipo de club digital que busca facilitar algo simple: encontrar compañía, recursos y oportunidades para hacer cosplay. La idea nació de ver que muchas personas comienzan sin saber a quién preguntar.</p><div className="mt-7 flex flex-wrap gap-3"><Link to="/colaboraciones" className="btn-primary">Explorar propuestas <ArrowUpRight size={18}/></Link><button type="button" onClick={onJoin} className="btn-light"><Users size={17}/> Mi tarjeta</button></div></div><ImageSlot tipo="hero" className="card-paper aspect-[5/4] overflow-hidden rotate-[2deg]" alt="Espacio reservado para fotografía de equipo NEXO"/></div></section>
+  <section className="section-space"><div className="container-nexo"><div className="max-w-3xl"><span className="kicker">Nuestros acuerdos</span><h2 className="font-display mt-4 text-4xl font-extrabold sm:text-5xl">Aquí hay lugar para todos los niveles.</h2></div><div className="mt-9 grid gap-5 md:grid-cols-3">{values.map(v=><article key={v.title} className="card-paper p-7"><div className={`sticker inline-flex h-15 w-15 items-center justify-center rounded-2xl ${v.bg}`}><v.icon size={27}/></div><h3 className="font-display mt-7 text-2xl font-extrabold">{v.title}</h3><p className="mt-3 text-sm leading-7 text-subtle">{v.text}</p></article>)}</div><div className="mt-12 rounded-[25px] border-2 border-ink bg-sun p-7 sm:p-9"><h2 className="font-display text-3xl font-extrabold">Un prototipo, un propósito real.</h2><p className="mt-3 max-w-3xl text-sm leading-8">Esta versión es un proyecto universitario (PC3). Los perfiles, eventos, proyectos y convocatorias son ficticios; las interacciones locales demuestran cómo podría funcionar un club, sin hacer creer que existe una red social operativa o una inscripción pública.</p></div></div></section>
+ </>
 }

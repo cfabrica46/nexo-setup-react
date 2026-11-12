@@ -1,0 +1,12 @@
+import { Link, useParams } from 'react-router-dom'
+import { ArrowLeft, Bookmark, MapPin, Lightbulb, Handshake } from 'lucide-react'
+import { creadores } from '../data/content.js'
+import ImageSlot from '../components/ImageSlot.jsx'
+import NotFound from './NotFound.jsx'
+export default function CreatorDetail({ savedCreators, toggleCreator }) {
+  const {id} = useParams()
+  const c = creadores.find(person=>person.id===id)
+  if(!c) return <NotFound/>
+  const saved = savedCreators.includes(c.id)
+  return <section className="section-space"><div className="container-nexo"><Link to="/comunidad" className="mb-7 inline-flex items-center gap-2 text-sm font-extrabold"><ArrowLeft size={17}/> Volver a creadores</Link><div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr]"><ImageSlot tipo="persona" src={c.imagen} alt={`Imagen por definir del creador ${c.nombre}`} className="card-paper aspect-[4/4.4] overflow-hidden"/><div className="self-center"><span className="chip bg-mint">{c.rol}</span><h1 className="font-display mt-5 text-5xl font-extrabold tracking-tight sm:text-6xl">{c.nombre}<span className="text-coral">.</span></h1><p className="mt-2 text-lg font-bold text-subtle">{c.alias}</p><p className="mt-5 text-base leading-8">{c.bio}</p><div className="mt-6 flex flex-wrap gap-3"><span className="chip bg-sun"><MapPin size={14}/>{c.ciudad}</span><span className="chip bg-rose">{c.nivel}</span></div><div className="mt-7"><h2 className="font-display mb-3 text-lg font-extrabold">Lo que me gusta hacer</h2><div className="flex flex-wrap gap-2">{c.habilidades.map(h=><span key={h} className="rounded-lg bg-cream px-3 py-2 text-sm font-bold">{h}</span>)}</div></div><div className="card-soft mt-7 p-5"><h2 className="flex items-center gap-2 font-display text-xl font-extrabold"><Handshake size={20} className="text-coral"/> Quiero conectar para...</h2><p className="mt-2 text-sm leading-7 text-subtle">{c.busca}</p></div><div className="mt-6 flex flex-wrap gap-3"><button onClick={()=>toggleCreator(c.id)} aria-pressed={saved} className={saved?'btn-dark':'btn-primary'}><Bookmark size={16} fill={saved?'currentColor':'none'}/>{saved?'Guardado en mi lista':'Guardar creador'}</button><Link to="/colaboraciones" className="btn-outline"><Lightbulb size={16}/> Ver colaboraciones</Link></div><p className="mt-5 text-xs leading-6 text-subtle">Ficha ficticia. Guardar no envía una solicitud de contacto; solo organiza tu lista local.</p></div></div></div></section>
+}

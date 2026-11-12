@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
+import { ArrowUpRight, Sparkles } from 'lucide-react'
+const links = [['Creadores','/comunidad'],['Colaboraciones','/colaboraciones'],['Agenda','/eventos'],['Proyectos','/proyectos'],['Guías','/recursos'],['Sobre NEXO','/nosotros'],['Contacto','/contacto']]
 export default function Footer() {
-  return <footer className="mt-16 border-t border-nexo-border bg-nexo-surface">
-    <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-3 lg:px-8">
-      <div><div className="text-2xl font-black tracking-tight">NEXO <span className="text-nexo-primary">SETUP</span></div><p className="mt-4 max-w-xs text-sm leading-7 text-nexo-muted">Tu espacio. Tu ritmo. Accesorios para crear un setup que se sienta tuyo.</p></div>
-      <div><h3 className="font-bold">Explorar</h3><nav className="mt-4 grid gap-3 text-sm text-nexo-muted"><Link to="/productos">Productos</Link><Link to="/ofertas">Ofertas</Link><Link to="/tienda">Tienda</Link><Link to="/nosotros">Nosotros</Link></nav></div>
-      <div><h3 className="font-bold">Estamos aquí</h3><p className="mt-4 text-sm leading-7 text-nexo-muted">Lima, Perú<br/>contacto@nexosetup.pe<br/>Lunes a sábado</p><Link to="/contacto" className="mt-3 inline-block text-sm font-semibold text-nexo-primary">Contáctanos →</Link></div>
-    </div>
-    <div className="border-t border-nexo-border px-5 py-4 text-center text-xs text-nexo-muted">© {new Date().getFullYear()} NEXO Setup · Proyecto universitario · Compra y autenticación simuladas</div>
+  return <footer className="border-t-2 border-ink bg-ink py-12 text-white sm:py-16">
+    <div className="container-nexo grid gap-10 border-b border-white/25 pb-11 md:grid-cols-[1.15fr_1fr_.85fr]">
+      <div><Link to="/" className="font-display inline-flex items-center gap-2 text-4xl font-extrabold tracking-[-.08em]"><Sparkles size={31} className="text-sun"/>NEXO<span className="text-coral">!</span></Link><p className="mt-5 max-w-sm text-sm leading-7 text-white/75">Cosplay no es hacerlo perfecto. Es crear, compartir lo que sabes y encontrar a tu crew.</p><span className="mt-5 inline-block rounded-full border border-white/50 px-3 py-1.5 text-[11px] font-bold">Prototipo universitario · Datos de ejemplo</span></div>
+      <div><h3 className="font-display mb-4 text-lg font-extrabold">Explora NEXO</h3><div className="grid grid-cols-2 gap-x-3 gap-y-3">{links.map(([name,path])=><Link key={path} to={path} className="text-sm text-white/80 hover:text-sun">{name}</Link>)}</div></div>
+      <div className="max-w-xs"><h3 className="font-display text-lg font-extrabold">Una idea para el club</h3><p className="mt-3 text-sm leading-7 text-white/75">¿Te gustaría proponer una actividad o mejorar el sitio? Cuéntanos.</p><Link to="/contacto" className="mt-4 inline-flex items-center gap-2 font-extrabold text-sun">Ir a contacto <ArrowUpRight size={17}/></Link></div>
+    </div><div className="container-nexo mt-6 flex flex-wrap justify-between gap-3 text-xs text-white/65"><span>© {new Date().getFullYear()} NEXO Cosplay Club</span><span>Proyecto académico · React + Tailwind</span></div>
   </footer>
 }
