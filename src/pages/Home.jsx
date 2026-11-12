@@ -1,38 +1,23 @@
 import { Link } from 'react-router-dom'
-import { useStore } from '../context/StoreContext'
-import ProductCard from '../components/ProductCard'
-import DataState from '../components/DataState'
-import { formatoPrecio, precioFinal, categorias } from '../services/productService'
-const categoryIcons = ['⌨','◉','♫','▤','⌁','☀']
-export default function Home() {
-  const { products, loading, error } = useStore()
-  const hero = products.find(p => p.id === 1) ?? products[0]
-  const featured = products.filter(p => p.destacado).slice(0, 4)
-  return <>
-    <section className="mx-auto max-w-7xl px-5 pt-9 lg:px-8 lg:pt-12">
-      <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
-        <div className="relative grid min-h-[420px] overflow-hidden rounded-[28px] bg-nexo-hero text-nexo-hero-text md:grid-cols-2">
-          <div className="relative z-10 flex flex-col justify-center px-8 py-12 md:px-10">
-            <span className="spec-tag !border-nexo-hero-text/20 !text-nexo-hero-text">⌨ Setup · Accesorios</span>
-            <h1 className="mt-5 text-5xl font-black leading-[1.02] tracking-[-0.055em] sm:text-6xl">Tu espacio.<br/><span className="text-nexo-primary-dark">Tu ritmo.</span></h1>
-            <p className="mt-5 max-w-md leading-7 opacity-80">Accesorios para trabajar, estudiar y crear un setup que se sienta realmente tuyo.</p>
-            <div className="mt-8 flex flex-wrap gap-3"><Link to="/productos" className="rounded-xl bg-nexo-hero-text px-5 py-3 text-sm font-bold text-nexo-hero">Explorar productos →</Link><Link to="/tienda" className="rounded-xl border border-current/30 px-5 py-3 text-sm font-bold">Conocer NEXO</Link></div>
-          </div>
-          <div className="relative flex min-h-56 items-end justify-center p-6 md:min-h-0 md:items-center">
-            <div className="absolute inset-8 rounded-full bg-white/20 blur-[70px]" />
-            {hero ? <><img src={hero.imagen} alt={hero.nombre} className="relative z-10 aspect-square max-h-80 w-full rounded-3xl object-cover shadow-2xl md:-rotate-6"/><span className="absolute bottom-7 right-7 z-20 rounded-lg bg-nexo-surface px-3 py-2 text-xs font-semibold text-nexo-text">{hero.nombre} · {formatoPrecio(precioFinal(hero))}</span></> : <div className="relative grid h-56 w-56 place-items-center rounded-3xl bg-nexo-surface/20 text-4xl">NEXO</div>}
-          </div>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-          <div className="flex flex-col justify-between rounded-[26px] bg-nexo-yellow p-7 text-[#282015]"><span className="text-xs font-bold uppercase tracking-widest">Catálogo</span><div><p className="text-5xl font-black">06</p><p className="mt-2 text-lg font-bold">Categorías para encontrar tu estilo</p></div><Link to="/productos" className="mt-3 font-semibold underline underline-offset-4">Explorar categorías →</Link></div>
-          <div className="flex flex-col justify-between rounded-[26px] bg-nexo-pink p-7 text-[#281d23]"><span className="text-xs font-bold uppercase tracking-widest">NEXO Deals</span><div><p className="mt-4 text-2xl font-black">Actualiza tu espacio, no tu presupuesto.</p><p className="mt-2 text-sm">Encuentra descuentos en accesorios seleccionados.</p></div><Link to="/ofertas" className="mt-4 font-bold underline underline-offset-4">Ver ofertas →</Link></div>
-        </div>
-      </div>
-    </section>
-    <div className="mt-9 overflow-hidden border-y border-nexo-border bg-nexo-surface py-3 text-center text-xs font-extrabold tracking-[0.22em] text-nexo-primary">TECLADOS ✦ MOUSE ✦ AUDIO ✦ ESCRITORIO ✦ CONECTIVIDAD ✦ ILUMINACIÓN</div>
-    <section className="section-wrap"><div className="section-heading"><div><span className="section-label">EXPLORA</span><h2>Todo para tu setup.</h2></div><Link to="/productos" className="link-accent">Ver catálogo →</Link></div><div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">{categorias.map((categoria,i) => <Link key={categoria} to={`/productos?categoria=${encodeURIComponent(categoria)}`} className="nexo-card flex min-h-32 flex-col items-center justify-center gap-3 p-4 text-center transition-transform hover:-translate-y-1"><span className="text-4xl text-nexo-primary">{categoryIcons[i]}</span><strong className="text-sm">{categoria}</strong></Link>)}</div></section>
-    <section className="section-wrap pt-4"><div className="section-heading"><div><span className="section-label">DESTACADOS</span><h2>Elegidos para mejorar tu espacio.</h2></div></div>{(loading || error) ? <DataState /> : <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{featured.map(p => <ProductCard key={p.id} producto={p} />)}</div>}</section>
-    <section className="section-wrap"><div className="flex flex-col items-start justify-between gap-6 rounded-[26px] bg-nexo-feature p-8 text-nexo-feature-text md:flex-row md:items-center md:p-12"><div><span className="text-xs font-black tracking-widest">NEXO DEALS</span><h2 className="mt-3 max-w-2xl text-3xl font-black leading-tight sm:text-4xl">Dale un upgrade a tu setup sin pagar de más.</h2><p className="mt-3 opacity-80">Productos seleccionados con descuentos especiales.</p></div><Link to="/ofertas" className="shrink-0 rounded-xl bg-nexo-yellow px-6 py-3 text-sm font-bold text-[#261f13]">Ver ofertas →</Link></div></section>
-    <section className="section-wrap grid gap-4 pt-0 md:grid-cols-3">{[['✦','Productos seleccionados','Accesorios pensados para espacios cómodos y funcionales.'],['▤','Todo en un solo lugar','Tecnología y escritorio, sin complicaciones.'],['◎','Diseño que suma','Funcionalidad sin descuidar la estética.']].map(([icon,title,desc]) => <div key={title} className="nexo-card flex gap-4 p-6"><span className="text-3xl text-nexo-primary">{icon}</span><div><h3 className="font-bold">{title}</h3><p className="mt-2 text-sm leading-6 text-nexo-muted">{desc}</p></div></div>)}</section>
-  </>
+import { ArrowUpRight, Aperture, HeartHandshake, Palette, CalendarRange, Sparkles, Zap, ArrowRight } from 'lucide-react'
+import Hero from '../components/Hero.jsx'
+import CreatorCard from '../components/CreatorCard.jsx'
+import EventCard from '../components/EventCard.jsx'
+import SectionHeading from '../components/SectionHeading.jsx'
+import { creadores, eventos } from '../data/content.js'
+
+const features = [
+ {icon: Palette, title:'Comparte lo que creas', text:'Desde tu primer accesorio hasta tu cosplay más elaborado: cada proceso tiene una historia.',color:'text-nexo-purple'},
+ {icon:HeartHandshake,title:'Conoce a tu gente',text:'Conecta con artistas, makers, fotógrafos y fans de muchos universos.',color:'text-nexo-pink'},
+ {icon:CalendarRange,title:'Vive la comunidad',text:'Encuentros, talleres y espacios para descubrir nuevas ideas en conjunto.',color:'text-nexo-lime'},
+]
+export default function Home({onJoin,liked,onLike,savedEvents,onToggleEvent}) {
+ return <>
+  <Hero onJoin={onJoin}/>
+  <section className="section-space bg-[#1a1b30]"><div className="container-nexo"><SectionHeading label="Lo que nos mueve" title={<>Hacer cosplay es mejor <span className="text-nexo-purple">en compañía.</span></>} description="NEXO nace para que más personas encuentren inspiración, confianza y nuevas amistades alrededor de la creatividad."/><div className="grid gap-4 md:grid-cols-3">{features.map((f,i)=><article key={f.title} className="panel px-7 py-8"><div className={`mb-7 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#33344c] ${f.color}`}><f.icon size={23}/></div><div className="mb-2 text-[10px] font-extrabold tracking-[.18em] text-nexo-muted">0{i+1} / NEXO</div><h3 className="font-display text-[22px] font-bold tracking-tight">{f.title}</h3><p className="mt-3 text-sm leading-7 text-nexo-muted">{f.text}</p></article>)}</div></div></section>
+  <section className="section-space"><div className="container-nexo"><SectionHeading label="Talento de la comunidad" title={<>Personas reales.<br/><span className="text-nexo-lime">Universos propios.</span></>} description="Una muestra de cómo se verían los perfiles dentro de NEXO. Estos personajes son ilustraciones ficticias creadas para el proyecto." to="/comunidad" action="Conocer creadores"/><div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">{creadores.slice(0,3).map(c=><CreatorCard key={c.id} creator={c} liked={liked.includes(c.id)} onLike={onLike}/>)}</div></div></section>
+  <section className="section-space overflow-hidden bg-[#222139]"><div className="container-nexo grid items-center gap-8 lg:grid-cols-[1fr_1.1fr]"><div><span className="eyebrow">Tu espacio creativo</span><h2 className="font-display mt-5 text-[clamp(2.8rem,5.6vw,4.6rem)] leading-[1.03] font-bold tracking-[-.07em]">No es solo un traje.<br/><span className="text-nexo-pink">Es una historia.</span></h2><p className="mt-6 max-w-[455px] text-sm leading-8 text-nexo-muted">Cada puntada, prop, maquillaje y fotografía cuenta algo sobre ti. Queremos que NEXO sea ese lugar donde puedas mostrarlo sin miedo.</p><Link to="/galeria" className="btn-outline mt-8">Explora la galería <ArrowUpRight size={18}/></Link></div><div className="grid grid-cols-2 gap-4"><div className="overflow-hidden rounded-[25px] border border-[#5e4d78] bg-[#402d60]"><img src="/assets/art/cosplay-04.svg" alt="Cosplay ilustrado de personaje de fantasía" className="h-[380px] w-full object-cover" loading="lazy"/></div><div className="mt-11 overflow-hidden rounded-[25px] border border-[#536f6d] bg-[#284e61]"><img src="/assets/art/cosplay-03.svg" alt="Cosplay ilustrado de personaje futurista" className="h-[380px] w-full object-cover" loading="lazy"/></div></div></div></section>
+  <section className="section-space"><div className="container-nexo"><SectionHeading label="Agenda compartida" title="Nos vemos en el próximo encuentro." description="Actividades de ejemplo para mostrar cómo la comunidad podrá organizar y descubrir eventos." to="/eventos" action="Ver agenda"/><div className="grid gap-5 md:grid-cols-3">{eventos.map(e=><EventCard key={e.id} evento={e} saved={savedEvents.includes(e.id)} onToggle={onToggleEvent}/>)}</div></div></section>
+  <section className="pb-22"><div className="container-nexo"><div className="relative overflow-hidden rounded-[28px] bg-nexo-lime px-7 py-11 text-[#1c1d30] sm:px-12 sm:py-14 lg:flex lg:items-end lg:justify-between"><div className="absolute -right-16 -top-28 h-80 w-80 rounded-full border-[55px] border-[#2c3249]/10"/><div className="relative"><span className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.2em]"><Sparkles size={16}/> Tu próxima historia comienza aquí</span><h2 className="font-display mt-5 max-w-[650px] text-4xl font-bold leading-[1.1] tracking-[-.06em] sm:text-5xl">Ponte el traje.<br/>Encuentra a tu comunidad.</h2></div><button type="button" onClick={onJoin} className="relative mt-8 inline-flex items-center gap-2 rounded-xl bg-[#181a2b] px-6 py-4 text-sm font-bold text-white hover:bg-[#32334e] lg:mt-0">Ser parte de NEXO <ArrowUpRight size={18}/></button></div></div></section>
+ </>
 }

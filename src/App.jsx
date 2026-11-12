@@ -1,52 +1,34 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
-import { StoreProvider, useStore } from './context/StoreContext'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Home from './pages/Home'
-import Nosotros from './pages/Nosotros'
-import Productos from './pages/Productos'
-import Ofertas from './pages/Ofertas'
-import Tienda from './pages/Tienda'
-import Contacto from './pages/Contacto'
-import Login from './pages/Login'
-import MiCuenta from './pages/MiCuenta'
-import Dashboard from './pages/Dashboard'
-import Carrito from './pages/Carrito'
-import ProductDetail from './pages/ProductDetail'
-import NotFound from './pages/NotFound'
+import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Header from './components/Header.jsx'
+import Footer from './components/Footer.jsx'
+import JoinModal from './components/JoinModal.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
+import { useLocalStorage } from './hooks/useLocalStorage.js'
+import Home from './pages/Home.jsx'
+import Comunidad from './pages/Comunidad.jsx'
+import Eventos from './pages/Eventos.jsx'
+import Galeria from './pages/Galeria.jsx'
+import Nosotros from './pages/Nosotros.jsx'
+import Contacto from './pages/Contacto.jsx'
+import NotFound from './pages/NotFound.jsx'
 
-function GoTop() {
-  const location = useLocation()
-  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }) }, [location.pathname])
-  return null
-}
-function Protected({ children }) {
-  const { session } = useStore()
-  return session ? children : <Navigate to="/" replace />
-}
-function Layout() {
-  return <div className="min-h-screen bg-nexo-bg text-nexo-text transition-colors duration-200">
-    <GoTop /><Navbar />
-    <main className="min-h-[60vh]">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/nosotros" element={<Nosotros />} />
-        <Route path="/productos" element={<Productos />} />
-        <Route path="/productos/:id" element={<ProductDetail />} />
-        <Route path="/ofertas" element={<Ofertas />} />
-        <Route path="/tienda" element={<Tienda />} />
-        <Route path="/contacto" element={<Contacto />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mi-cuenta" element={<MiCuenta />} />
-        <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
-        <Route path="/carrito" element={<Carrito />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </main>
-    <Footer />
-  </div>
-}
 export default function App() {
-  return <BrowserRouter><StoreProvider><Layout /></StoreProvider></BrowserRouter>
+ const [joinOpen, setJoinOpen]=useState(false)
+ const [member,setMember]=useLocalStorage('nexo_cosplay_member',null)
+ const [liked,setLiked]=useLocalStorage('nexo_cosplay_likes',[])
+ const [savedEvents,setSavedEvents]=useLocalStorage('nexo_cosplay_events',[])
+ const onLike=id=>setLiked(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id])
+ const onToggleEvent=id=>setSavedEvents(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id])
+ return <div className="min-h-screen bg-nexo-bg text-white"><ScrollToTop/><Header onJoin={()=>setJoinOpen(true)} member={member}/>
+  <main id="main-content" className="min-h-[45vh]"><Routes>
+    <Route path="/" element={<Home onJoin={()=>setJoinOpen(true)} liked={liked} onLike={onLike} savedEvents={savedEvents} onToggleEvent={onToggleEvent}/>}/>
+    <Route path="/comunidad" element={<Comunidad liked={liked} onLike={onLike}/>}/>
+    <Route path="/eventos" element={<Eventos savedEvents={savedEvents} onToggleEvent={onToggleEvent}/>}/>
+    <Route path="/galeria" element={<Galeria liked={liked} onLike={onLike}/>}/>
+    <Route path="/nosotros" element={<Nosotros onJoin={()=>setJoinOpen(true)}/>}/>
+    <Route path="/contacto" element={<Contacto/>}/>
+    <Route path="*" element={<NotFound/>}/>
+  </Routes></main><Footer/><JoinModal open={joinOpen} onClose={()=>setJoinOpen(false)} member={member} onSave={setMember}/>
+ </div>
 }

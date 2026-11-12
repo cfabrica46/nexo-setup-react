@@ -1,26 +1,43 @@
 import { useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { useStore } from '../context/StoreContext'
-const items = [['Inicio','/'],['Productos','/productos'],['Ofertas','/ofertas'],['Tienda','/tienda'],['Contacto','/contacto']]
-const style = ({ isActive }) => `rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${isActive ? 'bg-nexo-primary/15 text-nexo-primary' : 'text-nexo-muted hover:bg-nexo-surface-alt hover:text-nexo-text'}`
-export default function Navbar() {
-  const { session, logout, count, theme, toggleTheme } = useStore()
-  const navigate = useNavigate()
-  const [mobile, setMobile] = useState(false)
-  const [account, setAccount] = useState(false)
-  const close = () => { setMobile(false); setAccount(false) }
-  const signout = () => { logout(); close(); navigate('/') }
-  return <header className="sticky top-0 z-50 border-b border-nexo-border bg-nexo-bg/95 backdrop-blur-md">
-    <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 lg:px-8">
-      <Link to="/" onClick={close} className="flex items-center gap-1 text-2xl font-black tracking-[-0.08em] text-nexo-text">NEXO <span className="ml-1 rounded bg-nexo-primary px-1.5 py-1 text-[10px] font-extrabold tracking-widest text-nexo-on-primary">SETUP</span></Link>
-      <nav aria-label="Principal" className="hidden items-center gap-1 lg:flex">{items.map(([name,path]) => <NavLink key={path} to={path} end={path === '/'} className={style}>{name}</NavLink>)}</nav>
-      <div className="flex items-center gap-2">
-        <button type="button" onClick={toggleTheme} className="nav-icon" aria-label={theme === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'} title="Cambiar tema">{theme === 'dark' ? '☀' : '☾'}</button>
-        <Link to="/carrito" onClick={close} className="nav-icon relative" aria-label={`Carrito: ${count} artículos`}>🛒{count > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-nexo-primary px-1 text-[10px] font-bold text-nexo-on-primary">{count}</span>}</Link>
-        {session ? <div className="relative hidden md:block"><button onClick={() => setAccount(!account)} className="nav-icon max-w-40 gap-2 px-3" aria-expanded={account}><span className="truncate text-sm">Mi cuenta</span>⌄</button>{account && <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-nexo-border bg-nexo-surface p-2 shadow-xl"><Link onClick={close} className="dropdown-item" to="/mi-cuenta">Mi Cuenta</Link><Link onClick={close} className="dropdown-item" to="/dashboard">Dashboard</Link><button onClick={signout} className="dropdown-item w-full text-left">Cerrar sesión</button></div>}</div> : <Link to="/login" onClick={close} className="hidden rounded-lg bg-nexo-primary px-4 py-2 text-sm font-bold text-nexo-on-primary md:block">Ingresar</Link>}
-        <button className="nav-icon lg:hidden" type="button" aria-label="Abrir menú" aria-expanded={mobile} onClick={() => setMobile(x => !x)}>{mobile ? '✕' : '☰'}</button>
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { ArrowUpRight, Menu, X, Sparkles } from 'lucide-react'
+
+const links = [
+  { to: '/', label: 'Inicio', end: true },
+  { to: '/comunidad', label: 'Comunidad' },
+  { to: '/eventos', label: 'Eventos' },
+  { to: '/galeria', label: 'Galería' },
+  { to: '/nosotros', label: 'Nosotros' },
+  { to: '/contacto', label: 'Contacto' },
+]
+
+export default function Navbar({ onJoin, member }) {
+  const [open, setOpen] = useState(false)
+  const location = useLocation()
+  // Cierra el menú al cambiar de ruta sin precisar un listener global.
+  const routeKey = location.pathname
+  const linkStyle = ({ isActive }) => `ring-focus transition-colors text-sm font-semibold ${isActive ? 'text-nexo-lime' : 'text-[#d4d1e3] hover:text-white'}`
+
+  return (
+    <nav className="container-nexo relative flex min-h-[82px] items-center justify-between gap-4" aria-label="Navegación principal" data-route={routeKey}>
+      <Link to="/" onClick={() => setOpen(false)} className="ring-focus flex shrink-0 items-center gap-3" aria-label="NEXO Cosplay: inicio">
+        <span className="flex h-11 w-11 items-center justify-center rounded-[13px] bg-nexo-lime text-nexo-bg"><Sparkles size={23} strokeWidth={2.6} /></span>
+        <span className="leading-none"><strong className="font-display block text-[23px] font-bold tracking-[-.07em]">NEXO<span className="text-nexo-lime">.</span></strong><span className="mt-[6px] block text-[9px] font-extrabold tracking-[.28em] text-nexo-muted">COSPLAY CLUB</span></span>
+      </Link>
+
+      <div className="hidden items-center gap-6 xl:flex">
+        {links.map(link => <NavLink key={link.to} end={link.end} to={link.to} className={linkStyle}>{link.label}</NavLink>)}
       </div>
-    </div>
-    {mobile && <nav aria-label="Móvil" className="flex flex-col gap-1 border-t border-nexo-border bg-nexo-bg px-5 py-3 lg:hidden">{items.map(([name,path]) => <NavLink key={path} to={path} onClick={close} end={path === '/'} className={style}>{name}</NavLink>)}<NavLink to="/carrito" onClick={close} className={style}>Carrito ({count})</NavLink>{session ? <><NavLink onClick={close} to="/mi-cuenta" className={style}>Mi Cuenta</NavLink><NavLink onClick={close} to="/dashboard" className={style}>Dashboard</NavLink><button className="px-3 py-2 text-left text-sm" onClick={signout}>Cerrar sesión</button></> : <NavLink onClick={close} to="/login" className={style}>Ingresar</NavLink>}</nav>}
-  </header>
+      <div className="hidden items-center gap-3 xl:flex">
+        <button type="button" onClick={onJoin} className="btn-lime ring-focus !px-5 !py-3">{member ? 'Mi comunidad' : 'Únete a NEXO'} <ArrowUpRight size={16}/></button>
+      </div>
+      <button type="button" onClick={() => setOpen(v => !v)} className="ring-focus ml-auto rounded-xl border border-nexo-line p-3 text-white xl:hidden" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} aria-controls="mobile-menu">{open ? <X size={23}/> : <Menu size={23}/>}</button>
+      {open && (
+        <div id="mobile-menu" className="absolute left-0 right-0 top-[75px] z-50 rounded-2xl border border-nexo-line bg-[#23243c] p-4 shadow-2xl xl:hidden">
+          <div className="grid gap-1">{links.map(link => <NavLink key={link.to} to={link.to} end={link.end} onClick={()=>setOpen(false)} className={({isActive})=>`rounded-xl px-4 py-3 text-sm font-bold ${isActive?'bg-[#404160] text-nexo-lime':'text-white hover:bg-[#31324c]'}`}>{link.label}</NavLink>)}</div>
+          <button type="button" onClick={()=>{setOpen(false);onJoin()}} className="btn-lime mt-3 w-full">{member ? 'Mi comunidad' : 'Únete a NEXO'} <ArrowUpRight size={16}/></button>
+        </div>
+      )}
+    </nav>
+  )
 }

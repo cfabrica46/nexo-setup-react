@@ -1,28 +1,7 @@
 import { Link } from 'react-router-dom'
-
-export default function Nosotros() {
-  return (
-    <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-      <p className="text-xs font-bold uppercase tracking-widest text-nexo-primary">Sobre NEXO</p>
-      <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">Tu espacio debería sentirse tan único como tú.</h1>
-      <p className="mt-7 max-w-3xl text-base leading-8 text-nexo-muted">NEXO Setup es una tienda ficticia de accesorios tecnológicos pensada para quienes estudian, programan, trabajan desde casa o disfrutan de su escritorio. Nuestra propuesta reúne productos útiles con una estética moderna, sin complicaciones.</p>
-      <div className="mt-12 grid gap-5 md:grid-cols-3">
-        {[
-          ['Productividad', 'Herramientas que hacen más cómoda tu jornada.'],
-          ['Estilo', 'Accesorios que se integran visualmente a tu espacio.'],
-          ['Versatilidad', 'Opciones para estudiar, crear y jugar de forma casual.'],
-        ].map(([titulo, descripcion]) => (
-          <article key={titulo} className="rounded-2xl border border-nexo-border bg-nexo-surface p-7">
-            <div className="mb-5 h-1 w-12 rounded bg-nexo-primary" />
-            <h2 className="text-xl font-bold">{titulo}</h2>
-            <p className="mt-3 text-sm leading-7 text-nexo-muted">{descripcion}</p>
-          </article>
-        ))}
-      </div>
-      <div className="mt-12 rounded-2xl border border-nexo-border bg-nexo-surface p-8 sm:flex sm:items-center sm:justify-between sm:gap-5">
-        <div><h2 className="text-2xl font-bold">¿Listo para mejorar tu setup?</h2><p className="mt-2 text-nexo-muted">Descubre nuestra selección de accesorios.</p></div>
-        <Link to="/productos" className="mt-5 inline-block rounded-xl bg-nexo-primary px-6 py-3 text-sm font-semibold text-white hover:bg-nexo-primary-hover sm:mt-0">Explorar catálogo</Link>
-      </div>
-    </div>
-  )
+import { ArrowUpRight, HeartHandshake, Palette, Users, Sparkles } from 'lucide-react'
+const values=[{icon:Palette,t:'Creatividad sin límites',d:'Cada persona tiene algo único que mostrar, sin importar su experiencia.'},{icon:Users,t:'Comunidad primero',d:'Creemos en aprender, colaborar y celebrar los procesos de otros.'},{icon:HeartHandshake,t:'Respeto y colaboración',d:'Queremos un espacio inclusivo y positivo para compartir pasiones.'}]
+export default function Nosotros({onJoin}) {
+ return <><section className="bg-grid py-16 sm:py-24"><div className="container-nexo grid items-center gap-10 lg:grid-cols-2"><div><span className="eyebrow">Conoce el proyecto</span><h1 className="font-display mt-5 text-5xl font-bold leading-[1.06] tracking-[-.075em] sm:text-6xl">El cosplay nos une.<br/><span className="text-nexo-lime">NEXO nos conecta.</span></h1><p className="mt-7 max-w-xl text-sm leading-8 text-nexo-muted sm:text-base">NEXO Cosplay es una propuesta académica de comunidad digital que busca dar visibilidad a creadores, inspirar a nuevos participantes y facilitar encuentros en torno a la cultura cosplay.</p><button type="button" onClick={onJoin} className="btn-lime mt-8">Ser parte de la comunidad <ArrowUpRight size={18}/></button></div><img className="w-full rounded-[26px] border border-[#4d4967]" src="/assets/art/hero-cosplay.svg" alt="Arte conceptual original de NEXO Cosplay"/></div></section>
+ <section className="section-space bg-[#1e2035]"><div className="container-nexo"><span className="eyebrow">Nuestra idea</span><h2 className="font-display mt-4 max-w-3xl text-4xl font-bold tracking-[-.055em] sm:text-5xl">Una comunidad donde todos puedan <span className="text-nexo-purple">crear y pertenecer.</span></h2><div className="mt-9 grid gap-4 md:grid-cols-3">{values.map((v,i)=><article key={v.t} className="panel p-7"><v.icon size={29} className="text-nexo-lime"/><span className="mt-8 block text-[10px] font-black tracking-widest text-nexo-muted">0{i+1}</span><h3 className="font-display mt-2 text-xl font-bold">{v.t}</h3><p className="mt-3 text-sm leading-7 text-nexo-muted">{v.d}</p></article>)}</div><p className="mt-9 text-xs leading-6 text-nexo-muted">NEXO, los perfiles y los eventos de esta versión son ficticios y se presentan como prototipo del Avance N.º 1 de PC3.</p></div></section></>
 }

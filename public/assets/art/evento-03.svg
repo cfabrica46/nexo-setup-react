@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-label="Arte promocional abstracto de evento cosplay">
+ <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1a435b"/><stop offset="1" stop-color="#17172a"/></linearGradient></defs>
+ <rect width="1000" height="620" fill="url(#bg)"/><circle cx="735" cy="300" r="240" fill="#5fe0db" opacity=".25"/><circle cx="735" cy="300" r="175" fill="none" stroke="#b99cff" stroke-width="4"/><circle cx="735" cy="300" r="215" fill="none" stroke="#b99cff" stroke-width="2" opacity=".5"/>
+ <path d="M-80 550 L1090 160 M-80 630 L1090 240" stroke="#b99cff" stroke-width="4" opacity=".17"/>
+ <path d="M440 650 C470 425 580 380 710 403 C820 390 930 450 990 650Z" fill="#5fe0db"/><ellipse cx="727" cy="301" rx="103" ry="125" fill="#D8A58F"/><path d="M620 290 Q610 176 725 166 Q858 182 827 326 L793 265 Q720 230 639 301Z" fill="#b99cff"/><path d="M675 323 L703 323 M752 323 L781 323" stroke="#252332" stroke-width="7"/><rect x="660" y="268" width="145" height="41" rx="14" fill="#1a435b" stroke="#b99cff" stroke-width="6"/><path d="M680 430 L723 495 L765 430" stroke="#b99cff" stroke-width="9" fill="none"/>
+ <g fill="#b99cff" opacity=".8"><path d="M134 96 L142 121 L168 129 L142 137 L134 163 L126 137 L100 129 L126 121Z"/><circle cx="305" cy="190" r="11"/><circle cx="80" cy="447" r="8"/></g>
+ </svg>

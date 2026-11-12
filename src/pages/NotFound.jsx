@@ -1,12 +1,3 @@
 import { Link } from 'react-router-dom'
-
-export default function NotFound() {
-  return (
-    <section className="mx-auto flex min-h-[65vh] max-w-3xl flex-col items-center justify-center px-5 py-20 text-center">
-      <p className="text-8xl font-black text-nexo-primary">404</p>
-      <h1 className="mt-5 text-3xl font-bold sm:text-4xl">Parece que este setup no existe.</h1>
-      <p className="mt-4 text-nexo-muted">La página que buscas no está disponible.</p>
-      <Link to="/" className="mt-8 rounded-xl bg-nexo-primary px-6 py-3 text-sm font-semibold text-white hover:bg-nexo-primary-hover">Volver al inicio</Link>
-    </section>
-  )
-}
+import { ArrowLeft, Sparkles } from 'lucide-react'
+export default function NotFound() {return <section className="container-nexo flex min-h-[65vh] flex-col items-center justify-center py-24 text-center"><Sparkles size={42} className="text-nexo-purple"/><p className="font-display mt-6 text-[clamp(6rem,16vw,12rem)] font-bold leading-none tracking-[-.12em] text-nexo-lime">404</p><h1 className="font-display mt-4 text-3xl font-bold">Este universo aún no existe.</h1><p className="mt-3 max-w-md text-sm leading-7 text-nexo-muted">Puede que el enlace esté equivocado. Pero aún quedan muchas historias por descubrir.</p><Link to="/" className="btn-lime mt-8"><ArrowLeft size={17}/> Regresar al inicio</Link></section>}

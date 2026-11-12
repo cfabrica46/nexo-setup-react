@@ -1,72 +1,9 @@
 import { useState } from 'react'
-
-const inicial = { nombre: '', correo: '', motivo: '', mensaje: '' }
-const campo = 'w-full rounded-xl border border-nexo-border bg-nexo-bg px-4 py-3 text-sm text-nexo-text outline-none placeholder:text-nexo-muted focus:border-nexo-primary'
-
+import { Mail, MessageCircle, Send, CheckCircle2 } from 'lucide-react'
+const initial={nombre:'',correo:'',motivo:'',mensaje:''}
 export default function Contacto() {
-  const [formulario, setFormulario] = useState(inicial)
-  const [error, setError] = useState('')
-  const [enviado, setEnviado] = useState(false)
-
-  const actualizar = (evento) => {
-    setFormulario({ ...formulario, [evento.target.name]: evento.target.value })
-    setError('')
-    setEnviado(false)
-  }
-
-  const enviar = (evento) => {
-    evento.preventDefault()
-    if (Object.values(formulario).some((valor) => !valor.trim())) {
-      setError('Completa todos los campos antes de continuar.')
-      return
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formulario.correo)) {
-      setError('Ingresa un correo electrónico válido.')
-      return
-    }
-    if (formulario.mensaje.trim().length < 10) {
-      setError('El mensaje debe tener al menos 10 caracteres.')
-      return
-    }
-    setEnviado(true)
-    setError('')
-    setFormulario(inicial)
-  }
-
-  return (
-    <section className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
-      <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-nexo-primary">Contacto</p>
-        <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">Hablemos de tu próximo setup.</h1>
-        <p className="mt-6 max-w-md leading-8 text-nexo-muted">¿Tienes alguna consulta sobre nuestros accesorios? Completa el formulario y te mostraremos una confirmación.</p>
-        <p className="mt-8 rounded-xl border border-nexo-border bg-nexo-surface p-5 text-sm leading-7 text-nexo-muted">Esta es una demostración académica. Los mensajes no se envían ni almacenan en un servidor.</p>
-      </div>
-      <form onSubmit={enviar} noValidate className="space-y-5 rounded-2xl border border-nexo-border bg-nexo-surface p-6 sm:p-8">
-        <div>
-          <label htmlFor="nombre" className="mb-2 block text-sm font-semibold">Nombre</label>
-          <input id="nombre" name="nombre" value={formulario.nombre} onChange={actualizar} placeholder="Tu nombre" className={campo} />
-        </div>
-        <div>
-          <label htmlFor="correo" className="mb-2 block text-sm font-semibold">Correo electrónico</label>
-          <input id="correo" name="correo" type="email" value={formulario.correo} onChange={actualizar} placeholder="tu@correo.com" className={campo} />
-        </div>
-        <div>
-          <label htmlFor="motivo" className="mb-2 block text-sm font-semibold">Motivo</label>
-          <select id="motivo" name="motivo" value={formulario.motivo} onChange={actualizar} className={campo}>
-            <option value="">Selecciona una opción</option>
-            <option value="Productos">Consulta de productos</option>
-            <option value="Disponibilidad">Disponibilidad</option>
-            <option value="Otro">Otro motivo</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="mensaje" className="mb-2 block text-sm font-semibold">Mensaje</label>
-          <textarea id="mensaje" name="mensaje" rows="5" value={formulario.mensaje} onChange={actualizar} placeholder="Cuéntanos tu consulta..." className={campo} />
-        </div>
-        {error && <p role="alert" className="text-sm text-nexo-danger">{error}</p>}
-        {enviado && <p role="status" className="rounded-lg border border-nexo-success/30 bg-nexo-success/10 p-3 text-sm text-nexo-success">Formulario validado correctamente. Esta es una confirmación simulada.</p>}
-        <button type="submit" className="w-full rounded-xl bg-nexo-primary px-6 py-3 font-semibold text-white transition-colors hover:bg-nexo-primary-hover">Enviar consulta</button>
-      </form>
-    </section>
-  )
+ const [form,setForm]=useState(initial);const [error,setError]=useState('');const [sent,setSent]=useState(false)
+ function update(e){setForm(p=>({...p,[e.target.name]:e.target.value}));setError('');setSent(false)}
+ function submit(e){e.preventDefault();if(form.nombre.trim().length<2){setError('Ingresa tu nombre o alias (mínimo 2 caracteres).');return}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.correo.trim())){setError('Ingresa un correo electrónico válido.');return}if(!form.motivo){setError('Selecciona el motivo de tu mensaje.');return}if(form.mensaje.trim().length<10){setError('Escribe un mensaje de al menos 10 caracteres.');return}setError('');setSent(true);setForm(initial)}
+ return <><section className="border-b border-[#3a3753] bg-grid py-16 sm:py-20"><div className="container-nexo"><span className="eyebrow">Ponte en contacto</span><h1 className="font-display mt-5 text-5xl font-bold tracking-[-.07em] sm:text-6xl">Las buenas ideas <span className="text-nexo-lime">se comparten.</span></h1><p className="mt-5 max-w-[640px] text-sm leading-8 text-nexo-muted">¿Quieres compartir una idea, sugerir una actividad o dejarnos un comentario? Este formulario es una simulación académica.</p></div></section><section className="section-space"><div className="container-nexo grid gap-8 lg:grid-cols-[.8fr_1.2fr]"><div className="panel self-start p-7 sm:p-9"><Mail size={35} className="text-nexo-lime"/><h2 className="font-display mt-5 text-2xl font-bold">Estamos para escucharte.</h2><p className="mt-4 text-sm leading-8 text-nexo-muted">NEXO está pensado para crear comunidad. Tu opinión puede inspirar las siguientes versiones de este proyecto.</p><div className="mt-7 flex items-center gap-3 rounded-xl bg-[#303147] p-4 text-xs text-[#d9d7e7]"><MessageCircle size={20} className="text-nexo-purple"/> Atención simulada · no se envían correos reales</div></div><form className="panel space-y-5 p-6 sm:p-9" onSubmit={submit} noValidate><div className="grid gap-5 sm:grid-cols-2"><label className="text-sm font-semibold" htmlFor="contact-nombre">Nombre o alias<input className="input-nexo mt-2" name="nombre" id="contact-nombre" value={form.nombre} onChange={update} maxLength={60} placeholder="¿Cómo te llamamos?" required/></label><label className="text-sm font-semibold" htmlFor="contact-correo">Correo electrónico<input className="input-nexo mt-2" name="correo" id="contact-correo" type="email" value={form.correo} onChange={update} placeholder="tu@correo.com" required/></label></div><label className="block text-sm font-semibold" htmlFor="contact-motivo">¿De qué quieres hablar?<select className="input-nexo mt-2" name="motivo" id="contact-motivo" value={form.motivo} onChange={update} required><option value="">Selecciona una opción</option><option value="comunidad">Sobre la comunidad</option><option value="eventos">Proponer un evento</option><option value="ideas">Ideas para NEXO</option><option value="otro">Otro tema</option></select></label><label className="block text-sm font-semibold" htmlFor="contact-mensaje">Tu mensaje<textarea className="input-nexo mt-2 min-h-[160px] resize-y" name="mensaje" id="contact-mensaje" value={form.mensaje} onChange={update} placeholder="Cuéntanos tu idea..." required/></label>{error&&<p role="alert" className="rounded-xl bg-[#523047] px-4 py-3 text-sm text-[#ffd2df]">{error}</p>}{sent&&<p role="status" className="flex items-center gap-2 rounded-xl border border-[#647746] bg-[#34412f] px-4 py-3 text-sm text-nexo-lime"><CheckCircle2 size={19}/> Mensaje validado correctamente (demostración; no enviado).</p>}<button className="btn-lime w-full sm:w-auto" type="submit">Enviar mensaje de prueba <Send size={17}/></button></form></div></section></>
 }

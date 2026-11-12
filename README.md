@@ -1,61 +1,73 @@
-# NEXO Setup — React (AP3)
+# NEXO Cosplay — PC3 Avance N.º 1
 
-Migración académica de NEXO Angular a React con Tailwind CSS, React Router DOM, Fetch API y JSON Server.
+**Universidad:** UTP · JavaScript Avanzado · **Tecnologías:** React + Vite + Tailwind CSS.
 
-## Iniciar
+Sitio web académico de una **comunidad cosplay ficticia** para mostrar creadores, ideas, eventos y contenido visual. Mantiene la marca **NEXO**, pero no reutiliza el negocio e-commerce de la versión Angular.
+
+## Ejecutar
 
 ```bash
 npm install
 npm run dev
 ```
 
-**Backend local alternativo** (otro terminal):
-
-```bash
-npx json-server --watch db.json --port 3000
-```
-
-Por defecto el frontend usa la API pública existente `https://nexo-setup.onrender.com`. Para usar el backend local, cree un archivo `.env.local` con `VITE_API_URL=http://localhost:3000` y reinicie Vite. Los datos iniciales del backend se encuentran en `db.json`.
-
-## Rutas
-
-- `/` Inicio
-- `/nosotros` Información de NEXO
-- `/productos` Catálogo y filtros
-- `/productos/:id` Detalle de producto
-- `/ofertas` Descuentos
-- `/tienda` Colecciones
-- `/contacto` Formulario con validaciones
-- `/login` Login simulado
-- `/mi-cuenta` Datos de sesión
-- `/dashboard` Estadísticas y CRUD simulado
-- `/carrito` Carrito y compra simulada
-- `*` 404
-
-**Demo login:** `admin@nexosetup.pe` / `nexo123`
-
-## Restricciones de la simulación
-
-No existe autenticación real ni pasarela de pagos. Los cambios CRUD, la sesión y el carrito se conservan solamente en el LocalStorage del navegador. El servicio REST expone el catálogo original desde JSON Server.
-
-## Importante: imágenes
-
-Los 12 archivos JPG deben estar en `public/assets/products/` manteniendo los nombres referidos por `db.json`. Esta entrega de código no incluye las imágenes binarias.
-
-## AP3: evidencia
-
-- Componentes funcionales y props: `src/components/ProductCard.jsx`
-- React Router DOM: `src/App.jsx`
-- `useState`, `useEffect` y Fetch: `src/context/StoreContext.jsx` y `src/services/productService.js`
-- `map()` y renderizado condicional: `src/pages/Productos.jsx`
-- Formulario y eventos: `src/pages/Contacto.jsx`, `src/pages/Login.jsx`, `src/pages/Dashboard.jsx`
-- Tailwind CSS y responsive: `src/index.css`, componentes y páginas
-- API simulada: `db.json`
-
-## Publicación
+Para generar el build de producción:
 
 ```bash
 npm run build
+npm run preview
 ```
 
-Publicar `dist/` en un servicio con rewrite SPA hacia `index.html` para rutas directas. Verificar acceso público a JSON Server y habilitación CORS. Completar aquí los enlaces reales del despliegue, GitHub e integrantes del grupo.
+## Páginas
+
+| Ruta | Contenido |
+|---|---|
+| `/` | Home con Header, Navbar, Hero, comunidad, eventos, CTA y Footer |
+| `/comunidad` | Perfiles de muestra, búsqueda, filtros, likes y perfil emergente |
+| `/eventos` | Agenda ficticia y guardado local de eventos |
+| `/galeria` | Muestra visual de diseños cosplay originales |
+| `/nosotros` | Propósito y valores de NEXO |
+| `/contacto` | Formulario con validaciones y confirmación simulada |
+| cualquier otra | 404 personalizada |
+
+## Componentes reutilizables
+
+`Header`, `Navbar`, `Hero`, `Footer`, `CreatorCard`, `EventCard`, `SectionHeading`, `JoinModal` y `ScrollToTop`.
+
+Se usan `Props`, `useState`, `useEffect`, `map()`, eventos, condicionales, enrutamiento con React Router y estilos responsivos con Tailwind CSS.
+
+## Importante
+
+- Los perfiles, nombres, encuentros y fechas son **datos demostrativos inventados para esta actividad**, no información real.
+- Las ilustraciones vectoriales incluidas son originales y no reproducen personajes de franquicias.
+- **No existe backend ni autenticación real**. El registro demo, los me gusta y la agenda se guardan en el LocalStorage del navegador.
+- El alcance entregado corresponde al **Avance 1**, no a una entrega final con JSON Server o servicios REST.
+
+## Documentación del avance
+
+- [`docs/PC3_AVANCE_01.md`](docs/PC3_AVANCE_01.md): respuestas a las cinco preguntas.
+- [`docs/MAPA_CUMPLIMIENTO.md`](docs/MAPA_CUMPLIMIENTO.md): comprobación de requisitos.
+- [`docs/FIGMA_INSTRUCCIONES.md`](docs/FIGMA_INSTRUCCIONES.md): incorporación de diseño en Figma.
+- [`design/figma/`](design/figma/): guía visual y wireframes de escritorio y móvil, listos para importar como SVG.
+
+## Vercel
+
+Se incluye `vercel.json` para que las rutas internas funcionen al actualizar directamente una URL. Importar el repositorio a Vercel, Framework Preset **Vite**, comando de build `npm run build`, salida `dist`.
+
+## Rama recomendada
+
+El repositorio de tienda puede conservarse en su rama original. Crea otra rama antes de reemplazar archivos:
+
+```bash
+git switch -c feature/nexo-cosplay-pc3
+```
+
+Luego incorpora el contenido de este ZIP, ejecuta `npm install`, prueba, confirma y haz push:
+
+```bash
+git add -A
+git commit -m "feat: implement NEXO cosplay PC3 avance 1"
+git push -u origin feature/nexo-cosplay-pc3
+```
+
+**Nota de Vercel:** para que el proyecto publicado muestre esta rama, usa una implementación Preview de la rama o configúrala como rama de producción. No necesitas sobrescribir `main`.
